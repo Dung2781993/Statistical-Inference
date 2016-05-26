@@ -19,42 +19,42 @@ Note that you will need to do a thousand simulations.
 
  We will run a series of 1000 simulations to create a data set for comparison to theory. Each simulation will contain 40 observations and the expoential distribution function will be set to ???rexp(40, 0.2)???.
  Known values: lambda = 0.2, n = 40, simulations = 1000
- ```{r}
- lambda = 0.2
- n = 40 
- nosim = 1000
 
- set.seed(349)
- ```
+   lambda = 0.2
+   n = 40 
+   nosim = 1000
+
+  set.seed(349)
+
  The following code performs the simulations to collect necessary data, then plots the data:
-  ```{r}
- exp_sim <- function(n, lambda)
- {
-   mean(rexp(n,lambda))
- }
- sim <- data.frame(ncol=2,nrow=1000)
- names(sim) <- c("Index","Mean")
- for (i in 1:nosim)
- {
-   sim[i,1] <- i
-   sim[i,2] <- exp_sim(n,lambda)
- }
- ```
+ 
+   exp_sim <- function(n, lambda)
+   {
+     mean(rexp(n,lambda))
+   }
+   sim <- data.frame(ncol=2,nrow=1000)
+   names(sim) <- c("Index","Mean")
+   for (i in 1:nosim)
+   {
+     sim[i,1] <- i
+     sim[i,2] <- exp_sim(n,lambda)
+   }
+
 ## Mean of n = 1000
- ```{r}
+
  sample_mean <- mean(sim$Mean)
  sample_mean
- ```
+
  
  ### Theoretical exponential mean of exponential distribution
- ```{r}        
+        
  theor_mean <- 1/lambda
  theor_mean
- ```
+
  
  The simulation mean of 4.983227 is close to the theoretical value of 5. 
  Histogram plot of the exponential distribution n = 1000
- ```{r}
+
  
  hist(sim$Mean, 
       breaks = 100, 
@@ -73,7 +73,6 @@ Note that you will need to do a thousand simulations.
         lty = c(1,1), 
         col = c(col = 3, col = 2))
  
- ```
 
 ## Sample Variance vs Theoretical Population Variance
 
@@ -81,22 +80,19 @@ We now turn our attention to the variance. We will compare the variance present 
 
 The variance of the sample means estimates the variance of the population by using the varience of the 1000 entries in the means vector times the sample size, 40. That is, ??2=Var(samplemeans)??N.
 
- ```{r}
+
  
  sample_var <- var(sim$Mean)
  theor_var <- ((1/lambda)^2)/40
  
- ```
+
  
  The theoretical variance of the population is given by ??2=(1/lambda)2.
- ```{r}
+
  
  sample_var
  theor_var
- 
- ```
- 
- ```{r}
+
  
  hist(sim$Mean, 
       breaks = 100, 
@@ -109,13 +105,7 @@ The variance of the sample means estimates the variance of the population by usi
  legend('topright', c("Theoretical Curve"), 
         lty = 1,lwd = 2, bty = "n", col = 3)
  
- 
- 
- ```
- 
- 
- ```{r}
- 
+
  hist(sim$Mean, 
       breaks = 100, 
       prob = TRUE, 
@@ -128,21 +118,19 @@ The variance of the sample means estimates the variance of the population by usi
  lines(xfit, yfit, pch = 22, col = 4, lty = 2)
  legend('topright', c("Simulated Values", "Theoretical Values"), 
         bty = "n", lty = c(1,2), col = c(4, 3))
- 
- ```
- 
+
  ## Show that the distribution is approximately normal.
  
  Due to the central limit theorem, the averages of samples follow normal distribution. The figure above also shows the density computed using the histogram and the normal density plotted with theoretical mean and variance values. Also, the q-q plot below suggests the normality. The theoretical quantiles again match closely with the actual quantiles. These four methods of comparison prove that the distribution is approximately normal.
  
- ```{r}
+
  
  qqnorm(sim$Mean, 
         main ="Normal Q-Q Plot")
  qqline(sim$Mean, 
         col = "3")
- 
- ```
+
+
  
 
 
